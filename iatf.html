@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IATF - Brakes India</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="lib/fonts/inter.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="logo">
+      <img src="brakes india pagr.png" alt="Brakes India Logo" class="site-logo">
+    </div>
+    <a href="admin-login.html" class="profile-icon profile-link" aria-label="Admin Login">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+      </svg>
+    </a>
+  </header>
+
+  <!-- Slide-out menu -->
+  <nav class="side-menu" id="sideMenu" aria-hidden="true">
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="menu-panel">
+      <ul class="menu-list">
+        <li><a href="index.html" class="menu-link">Home</a></li>
+        <li><a href="iatf.html" class="menu-link active">IATF</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main: IATF Modules -->
+  <main class="main-content">
+    <div class="page-inner">
+      <!-- IATF Banner -->
+      <div class="iatf-banner">
+        <div class="logo">SCS</div>
+        <h2 id="iatfBannerDisplay">IATF 16949</h2>
+        <div class="logo">SCS</div>
+      </div>
+
+      <!-- Module Grid -->
+      <div class="options-grid">
+        <a href="supply-module.html" class="option-card">
+          <div class="option-icon">📦</div>
+          <div class="option-title">Supply Module</div>
+        </a>
+
+        <a href="maintenance-module.html" class="option-card">
+          <div class="option-icon">🔧</div>
+          <div class="option-title">Maintenance Module</div>
+        </a>
+
+        <a href="production-module.html" class="option-card">
+          <div class="option-icon">⚙️</div>
+          <div class="option-title">Production Module</div>
+        </a>
+
+        <a href="quality-module.html" class="option-card">
+          <div class="option-icon">✓</div>
+          <div class="option-title">Quality Module</div>
+        </a>
+
+        <a href="technical-module.html" class="option-card">
+          <div class="option-icon">💻</div>
+          <div class="option-title">Technical Module</div>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // Load IATF Banner Title from localStorage
+    (function() {
+      var iatfDisplay = document.getElementById('iatfBannerDisplay');
+      var savedTitle = localStorage.getItem('biIatfBannerTitle');
+      if (savedTitle) {
+        iatfDisplay.textContent = savedTitle;
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Brakes India</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="lib/fonts/inter.css">
+</head>
+<body class="admin-page-body">
+  <main class="admin-login">
+    <div class="admin-card">
+      <h1>Admin Login</h1>
+      <p class="admin-subtitle">Use your admin credentials to update site content.</p>
+      <form id="adminLoginForm" class="admin-form">
+        <label class="admin-field">
+          <span>Username</span>
+          <input type="text" id="adminUsername" autocomplete="username" required>
+        </label>
+        <label class="admin-field">
+          <span>Password</span>
+          <input type="password" id="adminPassword" autocomplete="current-password" required>
+        </label>
+        <button type="submit" class="admin-primary-btn">Login</button>
+        <p class="admin-error" id="adminLoginError" aria-live="polite"></p>
+      </form>
+      <a href="index.html" class="admin-link">Back to Home</a>
+    </div>
+  </main>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance Module - IATF</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="lib/fonts/inter.css">
+</head>
+<body>
+  <header class="header supply-module-hide-header">
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="logo">
+      <img src="brakes india pagr.png" alt="Brakes India Logo" class="site-logo">
+    </div>
+    <a href="admin-login.html" class="profile-icon profile-link" aria-label="Admin Login">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+      </svg>
+    </a>
+  </header>
+
+  <nav class="side-menu" id="sideMenu" aria-hidden="true">
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="menu-panel">
+      <ul class="menu-list">
+        <li><a href="index.html" class="menu-link">Home</a></li>
+        <li><a href="iatf.html" class="menu-link">IATF</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-content supply-module-main">
+    <div class="supply-module-container">
+      <button class="supply-back-btn" id="maintenanceBackBtn" title="Back to IATF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+      </button>
+
+      <div class="supply-carousel maintenance-carousel">
+        <!-- Single slide: 3 charts (2 on top, 1 below centered) -->
+        <div class="carousel-slide active" data-slide="1">
+          <div class="charts-grid-3">
+            <div class="chart-card">
+              <h3 class="chart-title" id="maintGraph1Title">Overall Equipment Breakdown</h3>
+              <canvas id="maintChart1"></canvas>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-color maint-bar1"></span><span id="maintGraph1Bar1Label">Breakdown Hrs</span></span>
+                <span class="legend-item"><span class="legend-color maint-bar2"></span><span id="maintGraph1Bar2Label">No of Occ</span></span>
+                <span class="legend-item"><span class="legend-color maint-line1"></span><span id="maintGraph1Line1Label">Breakdown Hrs (Monthly)</span></span>
+                <span class="legend-item"><span class="legend-color maint-line2"></span><span id="maintGraph1Line2Label">No of Occ (Monthly)</span></span>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <h3 class="chart-title" id="maintGraph2Title">Equipment Breakdown by Line (Hrs)</h3>
+              <canvas id="maintChart2"></canvas>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-color maint-stack1"></span><span id="maintGraph2Series1Label">EHCU Assembly Line</span></span>
+                <span class="legend-item"><span class="legend-color maint-stack2"></span><span id="maintGraph2Series2Label">Cartridge Assembly Line</span></span>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <h3 class="chart-title" id="maintGraph3Title">Equipment Breakdown Occurrence</h3>
+              <canvas id="maintChart3"></canvas>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-color maint-stack1"></span><span id="maintGraph3Series1Label">EHCU Assembly Line</span></span>
+                <span class="legend-item"><span class="legend-color maint-stack2"></span><span id="maintGraph3Series2Label">Others</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="lib/chartjs/chart.umd.js"></script>
+  <script src="lib/chartjs/chartjs-plugin-datalabels.min.js"></script>
+  <script>Chart.register(ChartDataLabels);</script>
+  <script src="maintenance-module.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

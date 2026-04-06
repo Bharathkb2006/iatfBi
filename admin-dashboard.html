@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Updates | Brakes India</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="lib/fonts/inter.css">
+</head>
+<body class="admin-page-body">
+  <header class="admin-header">
+    <div class="admin-title">
+      <h1>Background Updates</h1>
+      <p>Update the content shown on the main site.</p>
+    </div>
+    <div class="admin-actions">
+      <button class="admin-secondary-btn" id="adminClearStorage">Clear Stored Files</button>
+      <button class="admin-secondary-btn" id="adminLogout">Logout</button>
+    </div>
+  </header>
+
+  <main class="admin-dashboard">
+    <section class="admin-section">
+      <h2>IATF Page Settings</h2>
+      <p class="admin-note">Update the IATF section header and content.</p>
+      <form id="iatfForm" class="admin-form-grid">
+        <label class="admin-field">
+          <span>IATF Banner Title</span>
+          <input type="text" id="iatfBannerTitle" placeholder="e.g., International Automotive Task Force">
+        </label>
+        <button type="button" id="iatfSave" class="admin-primary-btn admin-save">Save IATF Settings</button>
+        <p class="admin-status" id="iatfStatus" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="admin-section">
+      <h2>Supply Module - Graphs Configuration</h2>
+      <p class="admin-note">Select a graph and configure its title, labels, range, and data.</p>
+      
+      <!-- Graph Selector Dropdown -->
+      <div style="margin-bottom: 24px;">
+        <label class="admin-field" style="display: block; margin-bottom: 12px;">
+          <span>Select Graph to Edit</span>
+          <select id="supplyGraphSelector" class="admin-input-field" style="padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; width: 100%; max-width: 300px;">
+            <option value="">-- Choose a Graph --</option>
+            <option value="1">Graph 1: Child Parts Line Stoppage</option>
+            <option value="2">Graph 2: Customer Line Stoppage</option>
+            <option value="3">Graph 3: Premium Freight</option>
+            <option value="4">Graph 4: Inventory Trend IDM Parts</option>
+            <option value="5">Graph 5: Supply Graph 5</option>
+            <option value="6">Graph 6: Supply Graph 6</option>
+            <option value="7">Graph 7: Supply Graph 7</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- Graph Configuration Panel -->
+      <div id="graphConfigPanel" style="display: none; background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <!-- Graph Title -->
+          <label class="admin-field">
+            <span>Graph Title</span>
+            <input type="text" id="configGraphTitle" class="supply-config-input" placeholder="e.g., Child Parts Line Stoppage">
+          </label>
+
+          <!-- Y-Axis Label -->
+          <label class="admin-field">
+            <span>Y-Axis Label Name</span>
+            <input type="text" id="configYAxisLabel" class="supply-config-input" placeholder="e.g., No. of Occasions">
+          </label>
+
+          <!-- Y-Axis Min -->
+          <label class="admin-field">
+            <span>Y-Axis Min Value</span>
+            <input type="number" id="configYAxisMin" class="supply-config-input" placeholder="0" value="0">
+          </label>
+
+          <!-- Y-Axis Max -->
+          <label class="admin-field">
+            <span>Y-Axis Max Value</span>
+            <input type="number" id="configYAxisMax" class="supply-config-input" placeholder="100" value="100">
+          </label>
+        </div>
+
+        <!-- Data Table -->
+        <div style="overflow-x: auto; margin-bottom: 20px;">
+          <table id="supplyDataTable" class="supply-data-table" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+            <thead>
+              <tr style="background: #e8f0f5;">
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Months</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Jan</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Feb</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Mar</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Apr</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">May</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Jun</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Jul</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Aug</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Sep</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Oct</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Nov</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Dec</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: 600; background: #f5f5f5;">Target</td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="0" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="1" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="2" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="3" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="4" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="5" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="6" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="7" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="8" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="9" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="10" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="target-input" data-month="11" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: 600; background: #f5f5f5;">Actual</td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="0" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="1" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="2" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="3" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="4" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="5" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="6" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="7" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="8" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="9" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="10" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="actual-input" data-month="11" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Action Buttons -->
+        <div id="graphActionButtons" style="display: none; gap: 12px; flex-wrap: wrap;">
+          <button type="button" id="supplyGraphSave" class="admin-primary-btn" style="background: #27ae60; border: none; padding: 10px 24px; cursor: pointer; border-radius: 6px; color: white; font-weight: 600;">Save Graph</button>
+          <button type="button" id="supplyGraphClear" class="admin-secondary-btn" style="background: #e74c3c; border: none; padding: 10px 24px; cursor: pointer; border-radius: 6px; color: white; font-weight: 600;">Clear Graph</button>
+        </div>
+      </div>
+
+      <p class="admin-status" id="supplyStatus" aria-live="polite"></p>
+    </section>
+
+    <section class="admin-section">
+      <h2>Maintenance Module - Graphs Configuration</h2>
+      <p class="admin-note">Select a graph and configure its title, labels, range, and data.</p>
+      <div style="margin-bottom: 24px;">
+        <label class="admin-field" style="display: block; margin-bottom: 12px;">
+          <span>Select Graph to Edit</span>
+          <select id="maintGraphSelector" class="admin-input-field" style="padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; width: 100%; max-width: 300px;">
+            <option value="">-- Choose a Graph --</option>
+            <option value="1">Graph 1: Bar + Line (Overall Breakdown)</option>
+            <option value="2">Graph 2: Stacked Bar (Breakdown Hrs)</option>
+            <option value="3">Graph 3: Stacked Bar (Occurrence)</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="maintGraphConfigPanel" style="display: none; background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <label class="admin-field"><span>Graph Title</span><input type="text" id="maintConfigTitle" class="supply-config-input"></label>
+          <label class="admin-field"><span>Y-Axis Label</span><input type="text" id="maintConfigYAxisLabel" class="supply-config-input"></label>
+          <label class="admin-field"><span>Y-Axis Min</span><input type="number" id="maintConfigYAxisMin" class="supply-config-input" value="0"></label>
+          <label class="admin-field"><span>Y-Axis Max</span><input type="number" id="maintConfigYAxisMax" class="supply-config-input" value="100"></label>
+        </div>
+
+        <div id="maintGraph1Fields" style="display: none;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px;">
+            <label class="admin-field"><span>Bar 1 Label</span><input type="text" id="maintBar1Label" class="supply-config-input" placeholder="e.g. Breakdown in Hrs"></label>
+            <label class="admin-field"><span>Bar 2 Label</span><input type="text" id="maintBar2Label" class="supply-config-input" placeholder="e.g. No of Occurrence"></label>
+            <label class="admin-field"><span>Bar 1 Value</span><input type="number" id="maintBar1Value" class="supply-config-input" step="0.01" value="0"></label>
+            <label class="admin-field"><span>Bar 2 Value</span><input type="number" id="maintBar2Value" class="supply-config-input" step="0.01" value="0"></label>
+            <label class="admin-field"><span>Line 1 Label</span><input type="text" id="maintLine1Label" class="supply-config-input"></label>
+            <label class="admin-field"><span>Line 2 Label</span><input type="text" id="maintLine2Label" class="supply-config-input"></label>
+          </div>
+          <div style="overflow-x: auto; margin-bottom: 16px;">
+            <table class="supply-data-table" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+              <thead>
+                <tr style="background: #e8f0f5;">
+                  <th style="padding: 10px; border: 1px solid #ddd;">Row</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Jan</th><th style="padding: 10px; border: 1px solid #ddd;">Feb</th><th style="padding: 10px; border: 1px solid #ddd;">Mar</th><th style="padding: 10px; border: 1px solid #ddd;">Apr</th><th style="padding: 10px; border: 1px solid #ddd;">May</th><th style="padding: 10px; border: 1px solid #ddd;">Jun</th><th style="padding: 10px; border: 1px solid #ddd;">Jul</th><th style="padding: 10px; border: 1px solid #ddd;">Aug</th><th style="padding: 10px; border: 1px solid #ddd;">Sep</th><th style="padding: 10px; border: 1px solid #ddd;">Oct</th><th style="padding: 10px; border: 1px solid #ddd;">Nov</th><th style="padding: 10px; border: 1px solid #ddd;">Dec</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Line 1</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="1" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="2" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="3" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="4" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="5" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="6" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="7" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="8" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="9" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="10" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line1-input" data-month="11" step="0.01" style="width: 60px;"></td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Line 2</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="1" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="2" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="3" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="4" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="5" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="6" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="7" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="8" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="9" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="10" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-line2-input" data-month="11" step="0.01" style="width: 60px;"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="maintGraph2_3Fields" style="display: none;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px;">
+            <label class="admin-field"><span>Series 1 Label</span><input type="text" id="maintSeries1Label" class="supply-config-input"></label>
+            <label class="admin-field"><span>Series 2 Label</span><input type="text" id="maintSeries2Label" class="supply-config-input"></label>
+          </div>
+          <div style="overflow-x: auto; margin-bottom: 16px;">
+            <table class="supply-data-table" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+              <thead>
+                <tr style="background: #e8f0f5;">
+                  <th style="padding: 10px; border: 1px solid #ddd;">Row</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Jan</th><th style="padding: 10px; border: 1px solid #ddd;">Feb</th><th style="padding: 10px; border: 1px solid #ddd;">Mar</th><th style="padding: 10px; border: 1px solid #ddd;">Apr</th><th style="padding: 10px; border: 1px solid #ddd;">May</th><th style="padding: 10px; border: 1px solid #ddd;">Jun</th><th style="padding: 10px; border: 1px solid #ddd;">Jul</th><th style="padding: 10px; border: 1px solid #ddd;">Aug</th><th style="padding: 10px; border: 1px solid #ddd;">Sep</th><th style="padding: 10px; border: 1px solid #ddd;">Oct</th><th style="padding: 10px; border: 1px solid #ddd;">Nov</th><th style="padding: 10px; border: 1px solid #ddd;">Dec</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Series 1</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="1" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="2" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="3" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="4" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="5" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="6" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="7" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="8" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="9" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="10" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s1-input" data-month="11" style="width: 60px;"></td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Series 2</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="0" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="1" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="2" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="3" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="4" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="5" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="6" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="7" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="8" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="9" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="10" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="maint-s2-input" data-month="11" style="width: 60px;"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button type="button" id="maintGraphSave" class="admin-primary-btn" style="background: #27ae60; border: none; padding: 10px 24px; cursor: pointer; border-radius: 6px; color: white; font-weight: 600;">Save Graph</button>
+          <button type="button" id="maintGraphClear" class="admin-secondary-btn" style="background: #e74c3c; border: none; padding: 10px 24px; cursor: pointer; border-radius: 6px; color: white; font-weight: 600;">Clear Graph</button>
+        </div>
+      </div>
+      <p class="admin-status" id="maintStatus" aria-live="polite"></p>
+    </section>
+
+    <section class="admin-section">
+      <h2>Production Module - Graphs Configuration</h2>
+      <p class="admin-note">Select a graph and configure its title, labels, range, and data.</p>
+      <div style="margin-bottom: 24px;">
+        <label class="admin-field" style="display: block; margin-bottom: 12px;">
+          <span>Select Graph to Edit</span>
+          <select id="prodGraphSelector" class="admin-input-field" style="padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; width: 100%; max-width: 300px;">
+            <option value="">-- Choose a Graph --</option>
+            <option value="1">Graph 1: Line Chart</option>
+            <option value="2">Graph 2: Line Chart</option>
+            <option value="3">Graph 3: Line Chart</option>
+            <option value="4">Graph 4: Bar + Line</option>
+            <option value="5">Graph 5: Bar + Line</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="prodGraphConfigPanel" style="display: none; background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <label class="admin-field"><span>Graph Title</span><input type="text" id="prodConfigTitle" class="supply-config-input"></label>
+          <label class="admin-field"><span>Y-Axis Label</span><input type="text" id="prodConfigYAxisLabel" class="supply-config-input"></label>
+          <label class="admin-field"><span>Y-Axis Min</span><input type="number" id="prodConfigYAxisMin" class="supply-config-input" value="0"></label>
+          <label class="admin-field"><span>Y-Axis Max</span><input type="number" id="prodConfigYAxisMax" class="supply-config-input" value="50"></label>
+        </div>
+
+        <div id="prodLineChartFields" style="display: none;">
+          <div style="overflow-x: auto; margin-bottom: 16px;">
+            <table class="supply-data-table" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+              <thead>
+                <tr style="background: #e8f0f5;">
+                  <th style="padding: 10px; border: 1px solid #ddd;">Row</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Jan</th><th style="padding: 10px; border: 1px solid #ddd;">Feb</th><th style="padding: 10px; border: 1px solid #ddd;">Mar</th><th style="padding: 10px; border: 1px solid #ddd;">Apr</th><th style="padding: 10px; border: 1px solid #ddd;">May</th><th style="padding: 10px; border: 1px solid #ddd;">Jun</th><th style="padding: 10px; border: 1px solid #ddd;">Jul</th><th style="padding: 10px; border: 1px solid #ddd;">Aug</th><th style="padding: 10px; border: 1px solid #ddd;">Sep</th><th style="padding: 10px; border: 1px solid #ddd;">Oct</th><th style="padding: 10px; border: 1px solid #ddd;">Nov</th><th style="padding: 10px; border: 1px solid #ddd;">Dec</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Target</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="1" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="2" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="3" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="4" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="5" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="6" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="7" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="8" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="9" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="10" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-target-input" data-month="11" step="0.01" style="width: 60px;"></td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Actual</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="1" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="2" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="3" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="4" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="5" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="6" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="7" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="8" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="9" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="10" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-actual-input" data-month="11" step="0.01" style="width: 60px;"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="prodBarLineFields" style="display: none;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px;">
+            <label class="admin-field"><span>Bar year label (axis text, e.g. 2024-25)</span><input type="text" id="prodBarYearLabel" class="supply-config-input" placeholder="2024-25"></label>
+            <label class="admin-field"><span>Bar value</span><input type="number" id="prodBarValue" class="supply-config-input" step="0.01" value="0"></label>
+            <label class="admin-field"><span>Line legend label</span><input type="text" id="prodLineLabel" class="supply-config-input" placeholder="Actual 25-26"></label>
+          </div>
+          <div style="overflow-x: auto; margin-bottom: 16px;">
+            <table class="supply-data-table" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+              <thead>
+                <tr style="background: #e8f0f5;">
+                  <th style="padding: 10px; border: 1px solid #ddd;">Line (Monthly)</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Jan</th><th style="padding: 10px; border: 1px solid #ddd;">Feb</th><th style="padding: 10px; border: 1px solid #ddd;">Mar</th><th style="padding: 10px; border: 1px solid #ddd;">Apr</th><th style="padding: 10px; border: 1px solid #ddd;">May</th><th style="padding: 10px; border: 1px solid #ddd;">Jun</th><th style="padding: 10px; border: 1px solid #ddd;">Jul</th><th style="padding: 10px; border: 1px solid #ddd;">Aug</th><th style="padding: 10px; border: 1px solid #ddd;">Sep</th><th style="padding: 10px; border: 1px solid #ddd;">Oct</th><th style="padding: 10px; border: 1px solid #ddd;">Nov</th><th style="padding: 10px; border: 1px solid #ddd;">Dec</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Value</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="1" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="2" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="3" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="4" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="5" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="6" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="7" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="8" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="9" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="10" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="prod-line-input" data-month="11" step="0.01" style="width: 60px;"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button type="button" id="prodGraphSave" class="admin-primary-btn" style="background: #27ae60; border: none; padding: 10px 24px; cursor: pointer; border-radius: 6px; color: white; font-weight: 600;">Save Graph</button>
+          <button type="button" id="prodGraphClear" class="admin-secondary-btn" style="background: #e74c3c; border: none; padding: 10px 24px; cursor: pointer; border-radius: 6px; color: white; font-weight: 600;">Clear Graph</button>
+        </div>
+      </div>
+      <p class="admin-status" id="prodStatus" aria-live="polite"></p>
+    </section>
+
+    <section class="admin-section">
+      <h2>Quality Module - Graphs Configuration</h2>
+      <p class="admin-note">Select a graph and configure its title, labels, range, and data.</p>
+
+      <div style="margin-bottom: 24px;">
+        <label class="admin-field" style="display: block; margin-bottom: 12px;">
+          <span>Select Graph to Edit</span>
+          <select id="qualityGraphSelector" class="admin-input-field" style="padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; width: 100%; max-width: 300px;">
+            <option value="">-- Choose a Graph --</option>
+            <option value="1">Graph 1: Quality Graph 1</option>
+            <option value="2">Graph 2: Quality Graph 2</option>
+            <option value="3">Graph 3: Quality Graph 3</option>
+            <option value="4">Graph 4: Quality Graph 4</option>
+            <option value="5">Graph 5: Quality Graph 5</option>
+            <option value="6">Graph 6: Quality Graph 6</option>
+            <option value="7">Graph 7: Quality Graph 7</option>
+            <option value="8">Graph 8: Quality Graph 8</option>
+            <option value="9">Graph 9: Single Line Chart 1</option>
+            <option value="10">Graph 10: Single Line Chart 2</option>
+            <option value="11">Graph 11: Single Line Chart 3</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="qualityGraphConfigPanel" style="display: none; background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <label class="admin-field">
+            <span>Graph Title</span>
+            <input type="text" id="qualityConfigGraphTitle" class="supply-config-input" placeholder="e.g., Quality Graph 1">
+          </label>
+          <label class="admin-field">
+            <span>Y-Axis Label Name</span>
+            <input type="text" id="qualityConfigYAxisLabel" class="supply-config-input" placeholder="e.g., No. of Occasions">
+          </label>
+          <label class="admin-field">
+            <span>Y-Axis Min Value</span>
+            <input type="number" id="qualityConfigYAxisMin" class="supply-config-input" placeholder="0" value="0">
+          </label>
+          <label class="admin-field">
+            <span>Y-Axis Max Value</span>
+            <input type="number" id="qualityConfigYAxisMax" class="supply-config-input" placeholder="100" value="100">
+          </label>
+        </div>
+
+        <!-- Line label (only for Graph 9 - single line) -->
+        <div id="qualitySingleLineMeta" style="display: none; margin-bottom: 16px;">
+          <label class="admin-field">
+            <span>Line Legend Label</span>
+            <input type="text" id="qualityLineLabel" class="supply-config-input" placeholder="e.g., Value">
+          </label>
+        </div>
+
+        <!-- Data Table: Target + Actual (Graphs 1-8) -->
+        <div id="qualityDataTableWrap" style="overflow-x: auto; margin-bottom: 20px;">
+          <table id="qualityDataTable" class="supply-data-table" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+            <thead>
+              <tr style="background: #e8f0f5;">
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Months</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Jan</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Feb</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Mar</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Apr</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">May</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Jun</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Jul</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Aug</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Sep</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Oct</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Nov</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Dec</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: 600; background: #f5f5f5;">Target</td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="0" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="1" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="2" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="3" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="4" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="5" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="6" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="7" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="8" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="9" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="10" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-target-input" data-month="11" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: 600; background: #f5f5f5;">Actual</td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="0" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="1" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="2" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="3" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="4" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="5" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="6" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="7" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="8" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="9" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="10" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-actual-input" data-month="11" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Single-line data table (Graph 9 only) -->
+        <div id="qualitySingleLineTableWrap" style="display: none; overflow-x: auto; margin-bottom: 20px;">
+          <table id="qualitySingleLineTable" class="supply-data-table" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+            <thead>
+              <tr style="background: #e8f0f5;">
+                <th style="padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Months</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Jan</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Feb</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Mar</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Apr</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">May</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Jun</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Jul</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Aug</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Sep</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Oct</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Nov</th>
+                <th style="padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Dec</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: 600; background: #f5f5f5;">Value</td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="0" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="1" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="2" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="3" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="4" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="5" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="6" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="7" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="8" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="9" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="10" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+                <td style="padding: 6px; text-align: center; border: 1px solid #ddd;"><input type="number" class="quality-value-input" data-month="11" step="0.1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="qualityGraphActionButtons" style="display: none; gap: 12px; flex-wrap: wrap;">
+          <button type="button" id="qualityGraphSave" class="admin-primary-btn" style="background: #27ae60; border: none; padding: 10px 24px; cursor: pointer; border-radius: 6px; color: white; font-weight: 600;">Save Graph</button>
+          <button type="button" id="qualityGraphClear" class="admin-secondary-btn" style="background: #e74c3c; border: none; padding: 10px 24px; cursor: pointer; border-radius: 6px; color: white; font-weight: 600;">Clear Graph</button>
+        </div>
+      </div>
+
+      <p class="admin-status" id="qualityStatus" aria-live="polite"></p>
+    </section>
+
+    <section class="admin-section">
+      <h2>Technical Module - Graphs Configuration</h2>
+      <p class="admin-note">
+        Select a graph and configure its title, labels, range, and data.
+      </p>
+
+      <div style="margin-bottom: 24px;">
+        <label class="admin-field" style="display: block; margin-bottom: 12px;">
+          <span>Select Graph to Edit</span>
+          <select id="techGraphSelector" class="admin-input-field" style="padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; width: 100%; max-width: 300px;">
+            <option value="">-- Choose a Graph --</option>
+            <option value="1">Graph 1: Bar + Line</option>
+            <option value="2">Graph 2: Bar + Line</option>
+            <option value="3">Graph 3: Bar + Line</option>
+            <option value="4">Graph 4: Capacity Utilisation (4 parameters)</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="techGraphConfigPanel" style="display: none; background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <label class="admin-field">
+            <span>Graph Title</span>
+            <input type="text" id="techConfigTitle" class="supply-config-input">
+          </label>
+          <label class="admin-field">
+            <span>Y-Axis Label</span>
+            <input type="text" id="techConfigYAxisLabel" class="supply-config-input">
+          </label>
+          <label class="admin-field">
+            <span>Y-Axis Min</span>
+            <input type="number" id="techConfigYAxisMin" class="supply-config-input" value="0">
+          </label>
+          <label class="admin-field">
+            <span>Y-Axis Max</span>
+            <input type="number" id="techConfigYAxisMax" class="supply-config-input" value="50">
+          </label>
+        </div>
+
+        <!-- Graphs 1–3: bar + line -->
+        <div id="techBarLineFields" style="display: none;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px;">
+            <label class="admin-field">
+              <span>Bar year label (axis text, e.g. 2024-25)</span>
+              <input type="text" id="techBarYearLabel" class="supply-config-input" placeholder="2024-25">
+            </label>
+            <label class="admin-field">
+              <span>Bar value</span>
+              <input type="number" id="techBarValue" class="supply-config-input" step="0.01" value="0">
+            </label>
+            <label class="admin-field">
+              <span>Line legend label</span>
+              <input type="text" id="techLineLabel" class="supply-config-input" placeholder="Actual 25-26">
+            </label>
+          </div>
+
+          <div style="overflow-x: auto; margin-bottom: 16px;">
+            <table class="supply-data-table" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+              <thead>
+                <tr style="background: #e8f0f5;">
+                  <th style="padding: 10px; border: 1px solid #ddd;">Line (Monthly)</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Jan</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Feb</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Mar</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Apr</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">May</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Jun</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Jul</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Aug</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Sep</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Oct</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Nov</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Dec</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Value</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="1" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="2" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="3" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="4" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="5" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="6" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="7" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="8" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="9" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="10" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-line-input" data-month="11" step="0.01" style="width: 60px;"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Graph 4: capacity utilisation (bar + 3 lines) -->
+        <div id="techCapacityFields" style="display: none;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px;">
+            <label class="admin-field"><span>Bar label (Actual)</span><input type="text" id="techCapBarLabel" class="supply-config-input" placeholder="Actual"></label>
+            <label class="admin-field"><span>Line 1 label</span><input type="text" id="techCapLine1Label" class="supply-config-input" placeholder="Line Capacity"></label>
+            <label class="admin-field"><span>Line 2 label</span><input type="text" id="techCapLine2Label" class="supply-config-input" placeholder="Series"></label>
+            <label class="admin-field"><span>Line 3 label</span><input type="text" id="techCapLine3Label" class="supply-config-input" placeholder="Utilization %"></label>
+          </div>
+
+          <div style="overflow-x: auto; margin-bottom: 16px;">
+            <table class="supply-data-table" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+              <thead>
+                <tr style="background: #e8f0f5;">
+                  <th style="padding: 10px; border: 1px solid #ddd;">Row</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Jan</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Feb</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Mar</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Apr</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">May</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Jun</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Jul</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Aug</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Sep</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Oct</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Nov</th>
+                  <th style="padding: 10px; border: 1px solid #ddd;">Dec</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Bar (Actual)</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="1" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="2" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="3" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="4" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="5" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="6" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="7" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="8" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="9" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="10" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-bar" data-month="11" step="0.01" style="width: 60px;"></td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Line 1</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="1" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="2" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="3" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="4" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="5" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="6" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="7" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="8" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="9" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="10" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line1" data-month="11" step="0.01" style="width: 60px;"></td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Line 2</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="1" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="2" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="3" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="4" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="5" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="6" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="7" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="8" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="9" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="10" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line2" data-month="11" step="0.01" style="width: 60px;"></td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd; font-weight: 600;">Line 3 (Utilization %)</td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="0" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="1" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="2" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="3" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="4" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="5" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="6" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="7" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="8" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="9" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="10" step="0.01" style="width: 60px;"></td>
+                  <td style="padding: 6px; border: 1px solid #ddd;"><input type="number" class="tech-cap-line3" data-month="11" step="0.01" style="width: 60px;"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button type="button" id="techGraphSave" class="admin-primary-btn" style="background: #27ae60; border: none; padding: 10px 24px; cursor: pointer; border-radius: 6px; color: white; font-weight: 600;">Save Graph</button>
+          <button type="button" id="techGraphClear" class="admin-secondary-btn" style="background: #e74c3c; border: none; padding: 10px 24px; cursor: pointer; border-radius: 6px; color: white; font-weight: 600;">Clear Graph</button>
+        </div>
+      </div>
+
+      <p class="admin-status" id="techStatus" aria-live="polite"></p>
+    </section>
+
+  <script src="admin.js"></script>
+</body>
+</html>

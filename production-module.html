@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Production Module - IATF</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="lib/fonts/inter.css">
+</head>
+<body>
+  <header class="header supply-module-hide-header">
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="logo">
+      <img src="brakes india pagr.png" alt="Brakes India Logo" class="site-logo">
+    </div>
+    <a href="admin-login.html" class="profile-icon profile-link" aria-label="Admin Login">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+      </svg>
+    </a>
+  </header>
+
+  <nav class="side-menu" id="sideMenu" aria-hidden="true">
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="menu-panel">
+      <ul class="menu-list">
+        <li><a href="index.html" class="menu-link">Home</a></li>
+        <li><a href="iatf.html" class="menu-link">IATF</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-content supply-module-main">
+    <div class="supply-module-container">
+      <button class="supply-back-btn" id="productionBackBtn" title="Back to IATF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+      </button>
+
+      <div class="supply-carousel production-carousel">
+        <!-- Slide 1: 3 line charts (Target + Actual) -->
+        <div class="carousel-slide active" data-slide="1">
+          <div class="charts-grid-3">
+            <div class="chart-card">
+              <h3 class="chart-title" id="prodGraph1Title">Production Graph 1</h3>
+              <canvas id="prodChart1"></canvas>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-color target"></span>Target</span>
+                <span class="legend-item"><span class="legend-color actual"></span>Actual</span>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3 class="chart-title" id="prodGraph2Title">Production Graph 2</h3>
+              <canvas id="prodChart2"></canvas>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-color target"></span>Target</span>
+                <span class="legend-item"><span class="legend-color actual"></span>Actual</span>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3 class="chart-title" id="prodGraph3Title">Production Graph 3</h3>
+              <canvas id="prodChart3"></canvas>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-color target"></span>Target</span>
+                <span class="legend-item"><span class="legend-color actual"></span>Actual</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: 2 bar + line charts -->
+        <div class="carousel-slide" data-slide="2">
+          <div class="charts-grid-2">
+            <div class="chart-card">
+              <h3 class="chart-title" id="prodGraph4Title">Production Bar + Line 1</h3>
+              <canvas id="prodChart4"></canvas>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-color target"></span><span id="prodGraph4BarLabel">2024-25</span></span>
+                <span class="legend-item"><span class="legend-color actual"></span><span id="prodGraph4LineLabel">Actual</span></span>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3 class="chart-title" id="prodGraph5Title">Production Bar + Line 2</h3>
+              <canvas id="prodChart5"></canvas>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-color target"></span><span id="prodGraph5BarLabel">2024-25</span></span>
+                <span class="legend-item"><span class="legend-color actual"></span><span id="prodGraph5LineLabel">Actual</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-nav">
+        <div class="carousel-indicators">
+          <button class="indicator active" data-slide="1" aria-label="Slide 1"></button>
+          <button class="indicator" data-slide="2" aria-label="Slide 2"></button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="lib/chartjs/chart.umd.js"></script>
+  <script src="lib/chartjs/chartjs-plugin-datalabels.min.js"></script>
+  <script>Chart.register(ChartDataLabels);</script>
+  <script src="production-module.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
