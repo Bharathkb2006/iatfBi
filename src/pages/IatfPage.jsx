@@ -7,6 +7,17 @@ export default function IatfPage() {
   useEffect(() => {
     const saved = localStorage.getItem('biIatfBannerTitle');
     if (saved) setBannerTitle(saved);
+
+    const onStorageUpdate = (event) => {
+      if (!event || !event.detail || event.detail.key !== 'biIatfBannerTitle') return;
+      const next = localStorage.getItem('biIatfBannerTitle');
+      if (next) setBannerTitle(next);
+    };
+
+    window.addEventListener('bi-storage-updated', onStorageUpdate);
+    return () => {
+      window.removeEventListener('bi-storage-updated', onStorageUpdate);
+    };
   }, []);
 
   return (

@@ -2,6 +2,19 @@
 (function () {
   'use strict';
 
+  // Reuse app-level Firebase storage proxy when this file runs in admin iframe.
+  try {
+    if (
+      window.parent &&
+      window.parent !== window &&
+      typeof window.parent.__biInstallStorageProxyInto === 'function'
+    ) {
+      window.parent.__biInstallStorageProxyInto(window);
+    }
+  } catch (e) {
+    // ignore cross-context installation errors
+  }
+
   var LOGIN_KEY = 'biAdminLoggedIn';
   var CONTENT_KEY = 'biContent';
 

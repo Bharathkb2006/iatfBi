@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './components/MainLayout.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -10,14 +11,16 @@ import ProductionModulePage from './pages/ProductionModulePage.jsx';
 import QualityModulePage from './pages/QualityModulePage.jsx';
 import TechnicalModulePage from './pages/TechnicalModulePage.jsx';
 import { firebaseReady } from './firebase/config.js';
+import { startRealtimeStorageProxy } from './firebase/realtimeStorageProxy.js';
 
 export default function App() {
-  // Simple runtime verification that env vars were injected correctly.
-  // Replace this later when you start reading/writing Firestore.
-  if (typeof window !== 'undefined') {
+  useEffect(() => {
     // eslint-disable-next-line no-console
     console.log('[Firebase] ready:', firebaseReady);
-  }
+    const stopSync = startRealtimeStorageProxy();
+    return () => stopSync();
+  }, []);
+
   return (
     <Routes>
       <Route element={<MainLayout />}>
